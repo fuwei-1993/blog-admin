@@ -1,19 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-const resolve = require('./utils')
-const HappyPack = require('happypack')
-const os = require('os')
+const { resolve, createHappyPlugin } = require('./utils')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const happyPackThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 const chalk = require('chalk')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
-
-const createHappyPlugin = (id, loaders) =>
-  new HappyPack({
-    id: id,
-    loaders: loaders,
-    threadPool: happyPackThreadPool,
-  })
 
 module.exports = {
   entry: {
@@ -86,7 +76,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        APP_BASE_URL: JSON.stringify('http://localhost:9000'),
         NODE_ENV: process.env.NODE_ENV,
       },
     }),
