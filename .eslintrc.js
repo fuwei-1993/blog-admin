@@ -43,11 +43,6 @@ module.exports = {
       { destructuring: 'all', ignoreReadBeforeAssign: true },
     ],
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/indent': [
-      'error',
-      2,
-      { VariableDeclarator: 2, SwitchCase: 1 },
-    ],
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/interface-name-prefix': 0,
@@ -60,6 +55,8 @@ module.exports = {
       { path: 'always', types: 'never', lib: 'never' },
     ],
     // React相关校验规则
+    'react/display-name': ['off'],
+    'react/prop-types': ['off'],
     'react/jsx-indent': [2, 2],
     'react/jsx-no-undef': [2, { allowGlobals: true }],
     'jsx-control-statements/jsx-use-if-tag': 0,

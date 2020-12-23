@@ -1,17 +1,39 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import ReactRouter from './router/index'
+import Router from './router/index'
 import ReactDOM from 'react-dom'
-
 import { AppContainer } from 'react-hot-loader'
-
 import './app.less'
-const renderRouter = (Router: () => JSX.Element) => {
+import { createStore } from './redux'
+
+const INCREMENT = 'INCREMENT'
+
+const increment = (
+  state: {
+    number: number
+  },
+  action: {
+    type: string
+  },
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, number: state.number + 1 }
+    default:
+      return state
+  }
+}
+
+const renderRouter = (Router: FC) => {
   const App = () => {
+    const { Provider } = createStore(increment, { number: 0 })
+
     return (
       <AppContainer>
         <BrowserRouter basename="/">
-          <Router />
+          <Provider>
+            <Router />
+          </Provider>
         </BrowserRouter>
       </AppContainer>
     )
@@ -20,12 +42,10 @@ const renderRouter = (Router: () => JSX.Element) => {
   ReactDOM.render(<App />, document.getElementById('app'))
 }
 
-// @ts-ignore
-if (module && module.hot) {
-  // @ts-ignore
+if (module?.hot) {
   module.hot.accept('./router', () => {
     renderRouter(require('./router/index').default)
   })
 }
 
-renderRouter(ReactRouter)
+renderRouter(Router)
